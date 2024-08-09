@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.expensetracker.R
+import com.example.expensetracker.Utils
 import com.example.expensetracker.data.ExpenseDataBase
 import com.example.expensetracker.data.dao.ExpenseDao
 import com.example.expensetracker.data.model.ExpenseEntity
@@ -24,7 +25,7 @@ class HomeViewModel(dao:ExpenseDao) :ViewModel(){
                 total-=it.amount
             }
         }
-        return "$ ${total}"
+        return "$ ${Utils.formatToDecimalValue(total)}"
     }
 
     fun getTotalExpense(list:List<ExpenseEntity>):String{
@@ -34,7 +35,7 @@ class HomeViewModel(dao:ExpenseDao) :ViewModel(){
                 total+=it.amount
             }
         }
-        return "$ ${total}"
+        return "$ ${Utils.formatToDecimalValue(total)}"
     }
     // FOR APPLYING Generic Icons
     fun getItemIcon(item:ExpenseEntity):Int{
@@ -47,13 +48,13 @@ class HomeViewModel(dao:ExpenseDao) :ViewModel(){
     }
 
     fun getTotalIncome(list:List<ExpenseEntity>):String{
-        var total=0.0
+        var totalIncome=0.0
         list.forEach{
             if(it.type=="Income"){
-                total+=it.amount
+                totalIncome+=it.amount
             }
         }
-        return "$ ${total}"
+        return "$ ${Utils.formatToDecimalValue(totalIncome)}"
     }
 }
 

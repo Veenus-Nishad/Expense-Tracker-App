@@ -2,6 +2,7 @@ package com.example.expensetracker
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -30,6 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.expensetracker.data.model.ExpenseEntity
 import com.example.expensetracker.ui.theme.Zinc
 import com.example.expensetracker.viewmodel.HomeViewModel
@@ -38,10 +42,10 @@ import com.example.expensetracker.widgets.ExpenseTextView
 import java.time.temporal.TemporalAmount
 
 @Composable
-fun HomeScreen(modifier: Modifier) {
+fun HomeScreen(navController: NavController) {
     // a variable to acess viewModel
     // var viewModel=HomeViewModel()
-    // aise Directly nahi hoga hume dao lagega(kyunki dao object lega define kiya hua hai) jiske database banani padegi
+    // Aise Directly nahi hoga hume dao lagega(kyunki dao object lega define kiya hua hai) jiske database banani padegi
     // isko tackle karne ke liye view model factory class bana padega in that file jo hume view model ka object bana ke dega idhar acess karne ke liye
     val viewModel: HomeViewModel =
         HomeViewModelFactory(LocalContext.current).create(HomeViewModel::class.java)
@@ -54,7 +58,7 @@ fun HomeScreen(modifier: Modifier) {
              can take 16 components.We can specify constraints for a reference (composable)
                 via constraintAs() modifier function.
             */
-            val (nameRow, list, card, topBar) = createRefs()
+            val (nameRow, list, card, topBar, add) = createRefs()
             Image(painter = painterResource(id = R.drawable.ic_topbar), contentDescription = null,
                 modifier = Modifier.constrainAs(topBar) {
                     top.linkTo(parent.top)
@@ -101,7 +105,22 @@ fun HomeScreen(modifier: Modifier) {
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
                     height = Dimension.fillToConstraints
-                },list=state.value,viewModel)
+                }, list = state.value, viewModel
+            )
+            Image(
+                painter = painterResource(id = android.R.drawable.ic_menu_add),
+                contentDescription = null,
+                modifier = Modifier
+                    .constrainAs(add) {
+                        bottom.linkTo(parent.bottom)
+                        end.linkTo(parent.end)
+                    }
+                    .size(48.dp)
+                    .clip(CircleShape)
+                    .clickable {
+                        navController.navigate("/add")
+                    }
+            )
         }
     }
 }
@@ -175,7 +194,7 @@ fun CardRowItem(modifier: Modifier, title: String, image: Int, amount: String) {
 }
 
 @Composable
-fun TransactionList(modifier: Modifier, list: List<ExpenseEntity>,viewModel: HomeViewModel) {
+fun TransactionList(modifier: Modifier, list: List<ExpenseEntity>, viewModel: HomeViewModel) {
     LazyColumn(modifier = modifier.padding(horizontal = 16.dp)) {
         item {
             Box(modifier = Modifier.fillMaxWidth()) {
@@ -188,9 +207,10 @@ fun TransactionList(modifier: Modifier, list: List<ExpenseEntity>,viewModel: Hom
             }
         }
         items(list) { item ->
+            val icon=viewModel?.getItemIcon(item)
             TransactionItem(
                 title = item.title,
-                icon =viewModel.getItemIcon(item),
+                icon = icon!!,
                 amount = item.amount.toString(),
                 date = item.date.toString(),
                 color = if (item.type == "income") Color.Green else Color.Red
@@ -232,5 +252,5 @@ fun TransactionItem(title: String, icon: Int, amount: String, date: String, colo
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewHomeScreen() {
-    HomeScreen(modifier = Modifier)
+    HomeScreen(rememberNavController())
 }
