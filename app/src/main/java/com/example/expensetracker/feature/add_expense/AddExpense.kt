@@ -1,4 +1,4 @@
-package com.example.expensetracker.ui
+package com.example.expensetracker.feature.add_expense
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

@@ -4,7 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.expensetracker.ui.AddExpense
+import com.example.expensetracker.feature.home.HomeScreen
+import com.example.expensetracker.feature.add_expense.AddExpense
 
 @Composable
 fun NavHostScreen(){

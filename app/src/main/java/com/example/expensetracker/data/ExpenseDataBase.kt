@@ -36,10 +36,10 @@ abstract class ExpenseDataBase:RoomDatabase() {
                 fun InitBasicData(context:Context){
                     CoroutineScope(Dispatchers.IO).launch {
                         val dao = getDatabase(context).expenseDao()
-                        dao.insertExpense(ExpenseEntity(1,"Salary",5000.0,System.currentTimeMillis(),"Salary","Income"))
-                        dao.insertExpense(ExpenseEntity(2,"paypal",50020.0,System.currentTimeMillis(),"paypal","Income"))
-                        dao.insertExpense(ExpenseEntity(3,"Netflix",50100.0,System.currentTimeMillis(),"Netflix","Expense"))
-                        dao.insertExpense(ExpenseEntity(4,"StarBucks",53000.0,System.currentTimeMillis(),"Starbucks","Expense"))
+                        dao.insertExpense(ExpenseEntity(1,"Salary",5000.0,System.currentTimeMillis().toString(),"Salary","Income"))
+                        dao.insertExpense(ExpenseEntity(2,"paypal",50020.0,System.currentTimeMillis().toString(),"paypal","Income"))
+                        dao.insertExpense(ExpenseEntity(3,"Netflix",50100.0,System.currentTimeMillis().toString(),"Netflix","Expense"))
+                        dao.insertExpense(ExpenseEntity(4,"StarBucks",53000.0,System.currentTimeMillis().toString(),"Starbucks","Expense"))
                     }
                 }
             }).build()

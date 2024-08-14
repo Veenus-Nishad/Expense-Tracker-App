@@ -1,4 +1,4 @@
-package com.example.expensetracker
+package com.example.expensetracker.feature.home
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,7 +17,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -34,18 +33,18 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.expensetracker.R
 import com.example.expensetracker.data.model.ExpenseEntity
 import com.example.expensetracker.ui.theme.Zinc
 import com.example.expensetracker.viewmodel.HomeViewModel
 import com.example.expensetracker.viewmodel.HomeViewModelFactory
 import com.example.expensetracker.widgets.ExpenseTextView
-import java.time.temporal.TemporalAmount
 
 @Composable
 fun HomeScreen(navController: NavController) {
     // a variable to acess viewModel
     // var viewModel=HomeViewModel()
-    // Aise Directly nahi hoga hume dao lagega(kyunki dao object lega define kiya hua hai) jiske database banani padegi
+    // A ise Directly nahi hoga hume dao lagega(kyunki dao object lega define kiya hua hai) jiske database banani padegi
     // isko tackle karne ke liye view model factory class bana padega in that file jo hume view model ka object bana ke dega idhar acess karne ke liye
     val viewModel: HomeViewModel =
         HomeViewModelFactory(LocalContext.current).create(HomeViewModel::class.java)
