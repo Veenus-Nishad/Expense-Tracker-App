@@ -39,7 +39,7 @@ abstract class ExpenseDataBase:RoomDatabase() {
                         dao.insertExpense(ExpenseEntity(1,"Salary",5000.0,System.currentTimeMillis().toString(),"Salary","Income"))
                         dao.insertExpense(ExpenseEntity(2,"paypal",50020.0,System.currentTimeMillis().toString(),"paypal","Income"))
                         dao.insertExpense(ExpenseEntity(3,"Netflix",50100.0,System.currentTimeMillis().toString(),"Netflix","Expense"))
-                        dao.insertExpense(ExpenseEntity(4,"StarBucks",53000.0,System.currentTimeMillis().toString(),"Starbucks","Expense"))
+                        dao.insertExpense(ExpenseEntity(4,"Starbucks",53000.0,System.currentTimeMillis().toString(),"Starbucks","Expense"))
                     }
                 }
             }).build()
