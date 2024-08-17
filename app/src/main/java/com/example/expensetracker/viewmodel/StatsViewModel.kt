@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.expensetracker.Utils
 import com.example.expensetracker.data.ExpenseDataBase
 import com.example.expensetracker.data.dao.ExpenseDao
-import com.example.expensetracker.data.model.ExpenseEntity
 import com.example.expensetracker.data.model.ExpenseSummary
 import com.github.mikephil.charting.data.Entry
 
@@ -17,6 +16,7 @@ import com.github.mikephil.charting.data.Entry
 class StatsViewModel(dao:ExpenseDao) :ViewModel(){
     //we only have to show data here
     val entries=dao.getAllExpensesByDate()
+    val topEntries=dao.getTopExpenses()
 
     fun getEntriesForChart(entries:List<ExpenseSummary>):List<Entry>{
         val list = mutableListOf<Entry>()

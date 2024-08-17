@@ -38,14 +38,7 @@ class HomeViewModel(dao:ExpenseDao) :ViewModel(){
         return "$ ${Utils.formatToDecimalValue(total)}"
     }
     // FOR APPLYING Generic Icons
-    fun getItemIcon(item:ExpenseEntity):Int{
-        if (item.category == "Paypal"){
-            return R.drawable.ic_paypal
-        }else if (item.category == "Netflix"){
-            return R.drawable.ic_netflix
-        }
-        return R.drawable.ic_upwork
-    }
+
 
     fun getTotalIncome(list:List<ExpenseEntity>):String{
         var totalIncome=0.0
