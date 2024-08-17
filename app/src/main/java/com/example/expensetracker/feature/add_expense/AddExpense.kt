@@ -75,6 +75,7 @@ fun AddExpense(navController: NavController) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 }) {
+                Image(painter = painterResource(id = R.drawable.ic_back), contentDescription = null)
                 ExpenseTextView(
                     text = "Add Expense",
                     fontSize = 20.sp,
