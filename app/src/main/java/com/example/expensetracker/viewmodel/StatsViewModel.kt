@@ -3,18 +3,29 @@ package com.example.expensetracker.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.expensetracker.R
 import com.example.expensetracker.Utils
 import com.example.expensetracker.data.ExpenseDataBase
 import com.example.expensetracker.data.dao.ExpenseDao
 import com.example.expensetracker.data.model.ExpenseEntity
+import com.example.expensetracker.data.model.ExpenseSummary
+import com.github.mikephil.charting.data.Entry
+
 
 //Jitne bhi Screns Hoti hai utne ViewModel banao
 
 //is viewModel ke andar hume dao ka Object chiye that isiliye (dao:ExpenseDao)
 class StatsViewModel(dao:ExpenseDao) :ViewModel(){
     //we only have to show data here
-    val expense=dao.getAllExpenses()
+    val entries=dao.getAllExpensesByDate()
+
+    fun getEntriesForChart(entries:List<ExpenseSummary>):List<Entry>{
+        val list = mutableListOf<Entry>()
+        for(entry in entries){
+            val formattedDate= Utils.getMillisFromDate(entry.date)
+            list.add(Entry(formattedDate.toFloat(),entry.total_amount.toFloat()))
+        }
+    return list // returning entries as list
+    }
 
 }
 

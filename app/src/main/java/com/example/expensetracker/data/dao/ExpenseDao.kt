@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.example.expensetracker.data.model.ExpenseEntity
+import com.example.expensetracker.data.model.ExpenseSummary
 import kotlinx.coroutines.flow.Flow
 
 //Helps in communication With the Database
@@ -16,6 +17,10 @@ interface ExpenseDao {
 
     @Query("SELECT * FROM expense_table")
     fun getAllExpenses(): Flow<List<ExpenseEntity>>
+
+    @Query("SELECT type,date,SUM(amount) AS total_amount FROM expense_table where type=:type GROUP BY type,date ORDER BY date")
+    fun getAllExpensesByDate(type:String="Expense"): Flow<List<ExpenseSummary>>
+
 
     @Insert //data Insert karne ke liye
     suspend fun insertExpense(expenseEntity: ExpenseEntity)

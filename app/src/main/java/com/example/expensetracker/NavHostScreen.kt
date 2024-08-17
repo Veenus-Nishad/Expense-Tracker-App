@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -30,7 +31,7 @@ fun NavHostScreen() {
     val navController = rememberNavController()
     // As bottom bar will be visible on our add expense screen due to Scaffold we will
     // use a variable to maintain its visibility
-    val bottomBarVisibility by remember {
+    var bottomBarVisibility by remember {
         mutableStateOf(true)
     }
     Scaffold(
@@ -47,12 +48,15 @@ fun NavHostScreen() {
     ) {innerPadding->
         NavHost(navController = navController, startDestination = "/home", modifier = Modifier.padding(innerPadding)) {
             composable(route = "/home") {
+                bottomBarVisibility=true
                 HomeScreen(navController)
             }
             composable(route = "/add") {
+                bottomBarVisibility=false
                 AddExpense(navController)
             }
             composable(route = "/stats") {
+                bottomBarVisibility=true
                 StatsScreen(navController)
             }
         }
@@ -64,7 +68,8 @@ fun NavHostScreen() {
     1. A data class to store navigation bar items
     2. Your bottom bar function with list of data class as parameter
     3. A State for current item/Screen in bottom Bar here "currentBackStackEntryAsState()"
-    4. Use a Scaffold
+    4. Use a Scaffold to encapsulate routes inside bottom bar
+    5. call the visibility variable inside desired composable
 */
 
 data class NavItem(
