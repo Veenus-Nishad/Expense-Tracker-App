@@ -16,13 +16,16 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text2.input.TextFieldCharSequence
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.PointerIcon.Companion.Text
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -83,6 +86,7 @@ fun HomeScreen(navController: NavController) {
                     )
                 }
                 Image(
+
                     painter = painterResource(id = R.drawable.ic_notification),
                     contentDescription = null,
                     modifier = Modifier.align(Alignment.CenterEnd)
@@ -146,7 +150,7 @@ fun CardItem(modifier: Modifier, balance: String, income: String, expenses: Stri
             Column(modifier = Modifier.align(Alignment.CenterStart)) {
                 ExpenseTextView(text = "Total Balance", fontSize = 16.sp, color = Color.White)
                 ExpenseTextView(
-                    text = balance,
+                    text = "${balance}",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.White
@@ -164,15 +168,15 @@ fun CardItem(modifier: Modifier, balance: String, income: String, expenses: Stri
         ) {
             CardRowItem(
                 modifier = Modifier.align(Alignment.CenterStart),
-                title = income,
+                title = "Income",
                 image = R.drawable.ic_income,
-                amount = " $34"
+                amount = income
             )
             CardRowItem(
                 modifier = Modifier.align(Alignment.CenterEnd),
-                title = expenses,
+                title = "Expenses",
                 image = R.drawable.ic_expense,
-                amount = " $35"
+                amount = expenses
             )
         }
     }
@@ -184,7 +188,7 @@ fun CardRowItem(modifier: Modifier, title: String, image: Int, amount: String) {
         Row {
             Image(painter = painterResource(id = image), contentDescription = null)
             Spacer(modifier = Modifier.size(8.dp))
-            ExpenseTextView(text = title, fontSize = 16.sp, color = Color.White)
+            ExpenseTextView(text=title, fontSize =12.sp, fontWeight = FontWeight.Bold, color = Color.White)
         }
         ExpenseTextView(
             text = amount,
@@ -248,7 +252,7 @@ fun TransactionItem(title: String, icon: Int, amount: String, date: String, colo
             }
         }
         ExpenseTextView(
-            text = amount,
+            text = "₹ ${amount}",
             fontSize = 20.sp,
             modifier = Modifier.align(Alignment.CenterEnd),
             color = color,

@@ -23,7 +23,7 @@ interface ExpenseDao {
     fun getTopExpenses(): Flow<List<ExpenseEntity>>
 
 
-    @Query("SELECT type,date,SUM(amount) AS total_amount FROM expense_table where type=:type GROUP BY type,date ORDER BY date")
+    @Query("SELECT type, date, SUM(amount) AS total_amount FROM expense_table where type = :type GROUP BY type, date ORDER BY date")
     fun getAllExpensesByDate(type:String="Expense"): Flow<List<ExpenseSummary>>
 
 

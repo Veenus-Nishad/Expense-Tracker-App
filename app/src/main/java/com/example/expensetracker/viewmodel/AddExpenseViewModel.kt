@@ -3,7 +3,7 @@ package com.example.expensetracker.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.expensetracker.data.ExpenseDataBase
+import com.example.expensetracker.data.ExpenseDatabase
 import com.example.expensetracker.data.dao.ExpenseDao
 import com.example.expensetracker.data.model.ExpenseEntity
 
@@ -20,13 +20,12 @@ class AddExpenseViewModel(val dao:ExpenseDao):ViewModel() {
     }
 }
 
-class AddExpenseiewModelFactory(private val context: Context): ViewModelProvider.Factory{
-    override fun <T:ViewModel> create(modelClass:Class<T>):T{
-        if(modelClass.isAssignableFrom(AddExpenseViewModel::class.java)){
-            val dao= ExpenseDataBase.getDatabase(context).expenseDao()
-            @Suppress("UNCHECKED_CAST")
-            return HomeViewModel(dao) as T
+class AddExpenseViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(AddExpenseViewModel::class.java)) {
+            val dao = ExpenseDatabase.getInstance(context).expenseDao()
+            return AddExpenseViewModel(dao) as T
         }
-        throw IllegalArgumentException("Unknown viewModel Class")
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

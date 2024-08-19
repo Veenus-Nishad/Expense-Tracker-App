@@ -48,14 +48,14 @@ import com.example.expensetracker.R
 import com.example.expensetracker.Utils
 import com.example.expensetracker.data.model.ExpenseEntity
 import com.example.expensetracker.viewmodel.AddExpenseViewModel
-import com.example.expensetracker.viewmodel.AddExpenseiewModelFactory
+import com.example.expensetracker.viewmodel.AddExpenseViewModelFactory
 import com.example.expensetracker.widgets.ExpenseTextView
 import kotlinx.coroutines.launch
 
 @Composable
 fun AddExpense(navController: NavController) {
     val viewModel =
-        AddExpenseiewModelFactory(LocalContext.current).create(AddExpenseViewModel::class.java)
+        AddExpenseViewModelFactory(LocalContext.current).create(AddExpenseViewModel::class.java)
     val coroutineScope= rememberCoroutineScope()
     Surface(modifier = Modifier.fillMaxSize()) {
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
@@ -176,7 +176,7 @@ fun DataForm(modifier: Modifier,onAddExpenseClick:(model:ExpenseEntity)->Unit) {
         ExpenseTextView(text = "Category", fontSize = 14.sp, color = Color.Gray)
         Spacer(modifier = Modifier.size(4.dp))
         ExpenseDropDown(
-            listOfItems = listOf("NetFlix", "Paypal", "StarBucks", "Salary", "Upwork"),
+            listOfItems = listOf("Netflix", "Paypal", "StarBucks", "Salary", "Upwork"),
             onItemSelected = {
                 category.value = it
             }

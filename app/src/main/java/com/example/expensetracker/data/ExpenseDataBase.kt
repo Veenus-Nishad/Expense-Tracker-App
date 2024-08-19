@@ -14,8 +14,8 @@ import kotlinx.coroutines.launch
 
 /*Ye RoomData base ki class automatically cheeze generate karek degi
  jaise expense Dao ki class*/
-@Database(entities = [ExpenseEntity::class], version = 1)
-abstract class ExpenseDataBase:RoomDatabase() {
+@Database(entities = [ExpenseEntity::class], version = 1, exportSchema = false)
+abstract class ExpenseDatabase:RoomDatabase() {
     // to tell the system is class se kya expected hai here Dao
     abstract fun expenseDao(): ExpenseDao
 
@@ -23,26 +23,63 @@ abstract class ExpenseDataBase:RoomDatabase() {
         const val DATABASE_NAME="expense_database"
 
         @JvmStatic// create's and return's database
-        fun getDatabase(context: Context):ExpenseDataBase{
+        fun getInstance(context: Context):ExpenseDatabase{
             return Room.databaseBuilder(
                 context,
-                ExpenseDataBase::class.java,
+                ExpenseDatabase::class.java,
                 DATABASE_NAME
             ).addCallback(object: Callback(){
                 override fun onCreate(db: SupportSQLiteDatabase) {
                     super.onCreate(db)
-                    InitBasicData(context)
+                  //  InitBasicData(context)
                 }
                 fun InitBasicData(context:Context){
                     CoroutineScope(Dispatchers.IO).launch {
-                        val dao = getDatabase(context).expenseDao()
-                        dao.insertExpense(ExpenseEntity(1,"Salary",5000.0,System.currentTimeMillis().toString(),"Salary","Income"))
-                        dao.insertExpense(ExpenseEntity(2,"paypal",50020.0,System.currentTimeMillis().toString(),"paypal","Income"))
-                        dao.insertExpense(ExpenseEntity(3,"Netflix",50100.0,System.currentTimeMillis().toString(),"Netflix","Expense"))
-                        dao.insertExpense(ExpenseEntity(4,"Starbucks",53000.0,System.currentTimeMillis().toString(),"Starbucks","Expense"))
+                        val dao = getInstance(context).expenseDao()
+                        dao.insertExpense(
+                            ExpenseEntity(
+                                null,
+                                "Salary",
+                                5000.40,
+                                "2021-08-01",
+                                "Salary",
+                                "Income"
+                            )
+                        )
+                        dao.insertExpense(
+                            ExpenseEntity(
+                                null,
+                                "Paypal",
+                                2000.50,
+                                "2021-08-01",
+                                "Paypal",
+                                "Income"
+                            )
+                        )
+                        dao.insertExpense(
+                            ExpenseEntity(
+                                null,
+                                "Netflix",
+                                100.43,
+                                "2021-08-01",
+                                "Netflix",
+                                "Expense"
+                            )
+                        )
+                        dao.insertExpense(
+                            ExpenseEntity(
+                                null,
+                                "Starbucks",
+                                400.56,
+                                "2021-08-02",
+                                "Starbucks",
+                                "Income"
+                            )
+                        )
                     }
                 }
-            }).build()
+            })
+                .build()
         }
     }
 }

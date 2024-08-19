@@ -3,9 +3,8 @@ package com.example.expensetracker.viewmodel
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.expensetracker.R
 import com.example.expensetracker.Utils
-import com.example.expensetracker.data.ExpenseDataBase
+import com.example.expensetracker.data.ExpenseDatabase
 import com.example.expensetracker.data.dao.ExpenseDao
 import com.example.expensetracker.data.model.ExpenseEntity
 
@@ -25,7 +24,7 @@ class HomeViewModel(dao:ExpenseDao) :ViewModel(){
                 total-=it.amount
             }
         }
-        return "$ ${Utils.formatToDecimalValue(total)}"
+        return "₹ ${Utils.formatToDecimalValue(total)}"
     }
 
     fun getTotalExpense(list:List<ExpenseEntity>):String{
@@ -35,7 +34,7 @@ class HomeViewModel(dao:ExpenseDao) :ViewModel(){
                 total+=it.amount
             }
         }
-        return "$ ${Utils.formatToDecimalValue(total)}"
+        return "₹ ${Utils.formatToDecimalValue(total)}"
     }
     // FOR APPLYING Generic Icons
 
@@ -47,14 +46,14 @@ class HomeViewModel(dao:ExpenseDao) :ViewModel(){
                 totalIncome+=it.amount
             }
         }
-        return "$ ${Utils.formatToDecimalValue(totalIncome)}"
+        return "₹ ${Utils.formatToDecimalValue(totalIncome)}"
     }
 }
 
 class HomeViewModelFactory(private val context:Context): ViewModelProvider.Factory{
     override fun <T:ViewModel> create(modelClass:Class<T>):T{
         if(modelClass.isAssignableFrom(HomeViewModel::class.java)){
-            val dao= ExpenseDataBase.getDatabase(context).expenseDao()
+            val dao= ExpenseDatabase.getInstance(context).expenseDao()
             @Suppress("UNCHECKED_CAST")
             return HomeViewModel(dao) as T
         }
